@@ -13,12 +13,28 @@ let package = Package(
         .library(
             name: "CoreNetwork",
             targets: ["CoreNetwork"]),
+        .library(
+            name: "Onboarding",
+            targets: ["Onboarding"]),
+        .library(
+            name: "CoreUI",
+            targets: ["CoreUI"])
     ],
     targets: [
 
         // MARK: -
 
+        .target(
+            name: "CoreNetwork"),
+
             .target(
-                name: "CoreNetwork"),
+                name: "Onboarding",
+                dependencies: [
+                    "CoreUI"
+                ]),
+
+            .target(
+                name: "CoreUI"),
+
     ]
 )

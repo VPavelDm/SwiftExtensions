@@ -1,0 +1,73 @@
+//
+//  SwiftUIView.swift
+//  
+//
+//  Created by Pavel Vaitsikhouski on 04.09.24.
+//
+
+import SwiftUI
+
+struct OneAnswerView: View {
+    @Environment(\.colorPalette) private var colorPalette
+    var step: OneAnswerStep
+
+    var body: some View {
+        VStack {
+            scrollView
+            continueButton
+        }
+        .background(colorPalette.backgroundColor)
+    }
+
+    private var scrollView: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 24) {
+                VStack(alignment: .leading) {
+                    titleView
+                    descriptionView
+                }
+                VStack(alignment: .leading, spacing: 12) {
+                    ForEach(step.answers.indices, id: \.self) { index in
+                        buttonView(answer: step.answers[index])
+                    }
+                }
+            }
+            .padding()
+        }
+    }
+
+    private var titleView: some View {
+        Text(step.question)
+            .font(.title)
+            .fontWeight(.bold)
+            .foregroundStyle(colorPalette.primaryTextColor)
+    }
+
+    @ViewBuilder
+    private var descriptionView: some View {
+        if let description = step.description {
+            Text(description)
+                .font(.headline)
+                .foregroundStyle(colorPalette.secondaryTextColor)
+        }
+    }
+
+    private func buttonView(answer: String) -> some View {
+        Button {} label: {
+            Text(answer)
+        }
+        .buttonStyle(SecondaryButtonStyle())
+    }
+
+    private var continueButton: some View {
+        Button {} label: {
+            Text("Continue")
+        }
+        .buttonStyle(PrimaryButtonStyle())
+        .padding([.horizontal, .bottom])
+    }
+}
+
+#Preview {
+    OneAnswerView(step: .testData())
+}
