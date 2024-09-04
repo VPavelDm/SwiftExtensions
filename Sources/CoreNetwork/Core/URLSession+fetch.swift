@@ -33,7 +33,7 @@ extension URLSession {
         do {
             let resource = resource.modify(modifiers)
 
-            authenticate(try resource.makeRequest()) { request in
+            authenticate(try resource.makeRequest(ResourceInitialiser.shared.networkEnvironment)) { request in
                 self.perform(request: request) { result in
                     let value = Result { try resource.transform(result.get()) }
                     queue.async { completion(value) }

@@ -10,7 +10,7 @@ import Foundation
 /// Encapsulates the creation of a network request and the transformation of the
 /// data into a usable type.
 public struct Resource<Value> {
-    public let makeRequest: () throws -> URLRequest
+    public let makeRequest: (NetworkEnvironment) throws -> URLRequest
     public let transform: ((Data, URLResponse)) throws -> Value
 
     /// Create a resource.
@@ -19,7 +19,7 @@ public struct Resource<Value> {
     ///   - makeRequest: Used to create the URL request.
     ///   - transform: Used to transform the response of the network call.
     public init(
-        makeRequest: @escaping () throws -> URLRequest,
+        makeRequest: @escaping (NetworkEnvironment) throws -> URLRequest,
         transform: @escaping ((Data, URLResponse)) throws -> Value
     ) {
         self.makeRequest = makeRequest
@@ -59,8 +59,8 @@ extension Resource {
     /// - Parameter modifier:
     /// - Returns: The modified resource.
     public func modify(_ modifier: NetworkModifier) -> Resource {
-        Resource(makeRequest: {
-            var request = try makeRequest()
+        Resource(makeRequest: { networkEnvironment in
+            var request = try makeRequest(networkEnvironment)
             try modifier.modifyRequest(&request)
             return request
         }, transform: { response in
