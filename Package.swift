@@ -10,14 +10,22 @@ let package = Package(
         .library(
             name: "SwiftExtensions",
             targets: ["SwiftExtensions"]),
+        .library(
+            name: "CoreNetwork",
+            targets: ["CoreNetwork"]),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
+
+        // MARK: -
+
         .target(
             name: "SwiftExtensions"),
-        .testTarget(
-            name: "SwiftExtensionsTests",
-            dependencies: ["SwiftExtensions"]),
+
+            .testTarget(
+                name: "SwiftExtensionsTests",
+                dependencies: ["SwiftExtensions"]),
+
+            .target(
+                name: "CoreNetwork"),
     ]
 )
