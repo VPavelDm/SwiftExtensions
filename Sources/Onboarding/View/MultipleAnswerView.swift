@@ -87,15 +87,22 @@ struct MultipleAnswerView: View {
         }
         .buttonStyle(PrimaryButtonStyle())
         .padding([.horizontal, .bottom])
-        .disabled(!answers.contains(where: { $0.isChose }))
+        .disabled(answers.isDisabled)
+        .animation(.easeInOut, value: answers.isDisabled)
     }
 
-    // MARK: -
+}
 
-    private struct BoxModel: Identifiable {
-        var id: String { value }
-        var isChose: Bool = false
-        var value: String
+private struct BoxModel: Identifiable {
+    var id: String { value }
+    var isChose: Bool = false
+    var value: String
+}
+
+private extension Array where Element == BoxModel {
+
+    var isDisabled: Bool {
+        !contains(where: { element in element.isChose })
     }
 }
 
