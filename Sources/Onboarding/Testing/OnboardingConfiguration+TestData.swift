@@ -11,7 +11,7 @@ extension OnboardingConfiguration {
 
     static func testData() -> Self {
         Self(
-            json: "",
+            fileName: "onboarding_steps",
             colorPalette: .testData
         )
     }

@@ -7,8 +7,6 @@
 
 import Foundation
 
-public struct OnboardingConfiguration {
+struct OnboardingStepResponse: Decodable {
 
-    let fileName: String
-    let colorPalette: ColorPalette
 }

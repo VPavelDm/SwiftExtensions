@@ -26,7 +26,6 @@ final class OnboardingViewModel: ObservableObject {
 
     // MARK: - Intents
 
-    func fetchSteps() async throws {
-        
+    func fetchSteps() async throws {        
     }
 }
