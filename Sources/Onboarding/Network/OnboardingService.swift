@@ -21,12 +21,12 @@ final class OnboardingService {
 
     // MARK: - Intents
 
-    func fetchSteps() async throws {
+    func fetchSteps() async throws -> [OnboardingStep] {
         guard let fileURL = Bundle.main.url(forResource: configuration.fileName, withExtension: "json") else {
             throw OnboardingError.fileDoesNotExist
         }
         let data = try Data(contentsOf: fileURL)
         let steps = try JSONDecoder().decode([OnboardingStepResponse].self, from: data)
-        print(steps)
+        return steps.compactMap(OnboardingStep.init(response:))
     }
 }

@@ -30,7 +30,7 @@ struct OneAnswerView: View {
     }
 
     private var titleView: some View {
-        Text(step.question)
+        Text(step.title)
             .font(.title)
             .fontWeight(.bold)
             .foregroundStyle(colorPalette.primaryTextColor)

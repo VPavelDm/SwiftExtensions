@@ -22,18 +22,37 @@ public struct OnboardingView: View {
 
     public var body: some View {
         contentView
+            .animation(.easeInOut, value: viewModel.steps.isEmpty)
             .environment(\.colorPalette, colorPalette)
+            .background(colorPalette.backgroundColor)
             .onFirstAppear {
                 do {
-                    try await viewModel.fetchSteps()
+                    try await viewModel.loadSteps()
                 } catch {
                     showError = true
                 }
             }
     }
 
+    @ViewBuilder
     private var contentView: some View {
-        Text("Hello, World!")
+        if let currentStep = viewModel.currentStep {
+            switch currentStep {
+            case .oneAnswer(let oneAnswerStep):
+                OneAnswerView(step: oneAnswerStep)
+            case .binaryAnswer(let binaryAnswerStep):
+                Text("Binary")
+            case .multipleAnswer(let multipleAnswerStep):
+                MultipleAnswerView(step: multipleAnswerStep)
+            case .description(let descriptionStep):
+                Text("Description")
+            }
+        } else {
+            ProgressView()
+                .tint(colorPalette.primaryButtonBackgroundColor)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(colorPalette.backgroundColor)
+        }
     }
 }
 
