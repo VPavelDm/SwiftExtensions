@@ -22,8 +22,11 @@ public struct OnboardingView: View {
 
     public var body: some View {
         contentView
-            .animation(.easeInOut, value: viewModel.steps.isEmpty)
+            .progressView(isVisible: viewModel.currentStep == nil) {
+                contentLoadingView
+            }
             .environment(\.colorPalette, colorPalette)
+            .environmentObject(viewModel)
             .background(colorPalette.backgroundColor)
             .onFirstAppear {
                 do {
@@ -36,23 +39,37 @@ public struct OnboardingView: View {
 
     @ViewBuilder
     private var contentView: some View {
-        if let currentStep = viewModel.currentStep {
-            switch currentStep {
-            case .oneAnswer(let oneAnswerStep):
-                OneAnswerView(step: oneAnswerStep)
-            case .binaryAnswer(let binaryAnswerStep):
-                Text("Binary")
-            case .multipleAnswer(let multipleAnswerStep):
-                MultipleAnswerView(step: multipleAnswerStep)
-            case .description(let descriptionStep):
-                Text("Description")
+        VStack {
+            if let currentStep = viewModel.currentStep {
+                switch currentStep {
+                case .oneAnswer(let oneAnswerStep):
+                    OneAnswerView(step: oneAnswerStep)
+                        .transition(transitionAnimation)
+                case .binaryAnswer(let binaryAnswerStep):
+                    Text("Binary")
+                case .multipleAnswer(let multipleAnswerStep):
+                    MultipleAnswerView(step: multipleAnswerStep)
+                        .transition(transitionAnimation)
+                case .description(let descriptionStep):
+                    Text("Description")
+                }
             }
-        } else {
-            ProgressView()
-                .tint(colorPalette.primaryButtonBackgroundColor)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(colorPalette.backgroundColor)
         }
+        .animation(.easeInOut, value: viewModel.currentStep)
+    }
+
+    private var contentLoadingView: some View {
+        ProgressView()
+            .tint(colorPalette.primaryButtonBackgroundColor)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(colorPalette.backgroundColor)
+    }
+
+    private var transitionAnimation: AnyTransition {
+        .asymmetric(
+            insertion: .move(edge: .trailing),
+            removal: .move(edge: .leading)
+        )
     }
 }
 

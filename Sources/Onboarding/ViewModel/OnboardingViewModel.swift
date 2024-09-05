@@ -33,4 +33,12 @@ final class OnboardingViewModel: ObservableObject {
         steps = try await service.fetchSteps()
         currentStep = steps.first
     }
+
+    func onAnswer() {
+        guard let currentStep else { return }
+        guard let currentStepIndex = steps.firstIndex(of: currentStep) else { return }
+        if currentStepIndex != steps.count - 1 {
+            self.currentStep = steps[currentStepIndex + 1]
+        }
+    }
 }

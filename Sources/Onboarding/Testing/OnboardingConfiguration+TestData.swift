@@ -11,7 +11,7 @@ extension OnboardingConfiguration {
 
     static func testData() -> Self {
         Self(
-            url: URL(string: "https://google.com")!,
+            url: Bundle.module.url(forResource: "onboarding_steps", withExtension: "json")!,
             colorPalette: .testData
         )
     }

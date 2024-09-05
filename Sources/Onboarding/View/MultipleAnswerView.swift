@@ -11,7 +11,8 @@ import CoreHaptics
 
 struct MultipleAnswerView: View {
     @Environment(\.colorPalette) private var colorPalette
-    
+    @EnvironmentObject private var viewModel: OnboardingViewModel
+
     @State private var answers: [BoxModel]
     private let step: MultipleAnswerStep
 
@@ -80,6 +81,7 @@ struct MultipleAnswerView: View {
     private var nextButton: some View {
         Button {
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            viewModel.onAnswer()
         } label: {
             Text("Next")
         }
