@@ -41,7 +41,7 @@ public struct OnboardingView: View {
     private var contentView: some View {
         VStack {
             if let currentStep = viewModel.currentStep {
-                switch currentStep {
+                switch currentStep.type {
                 case .oneAnswer(let oneAnswerStep):
                     OneAnswerView(step: oneAnswerStep)
                         .transition(transitionAnimation)
@@ -52,6 +52,8 @@ public struct OnboardingView: View {
                         .transition(transitionAnimation)
                 case .description(let descriptionStep):
                     Text("Description")
+                case .unknown:
+                    EmptyView()
                 }
             }
         }

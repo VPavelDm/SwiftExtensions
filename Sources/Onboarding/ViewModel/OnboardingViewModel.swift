@@ -31,14 +31,12 @@ final class OnboardingViewModel: ObservableObject {
 
     func loadSteps() async throws {
         steps = try await service.fetchSteps()
+            .filter(\.isNotUnknown)
         currentStep = steps.first
     }
 
     func onAnswer() {
-        guard let currentStep else { return }
-        guard let currentStepIndex = steps.firstIndex(of: currentStep) else { return }
-        if currentStepIndex != steps.count - 1 {
-            self.currentStep = steps[currentStepIndex + 1]
-        }
+        guard let nextStepIndex = steps.firstIndex(where: { $0.id == currentStep?.nextStepID }) else { return }
+        currentStep = steps[nextStepIndex]
     }
 }

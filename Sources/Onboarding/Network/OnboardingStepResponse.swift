@@ -9,10 +9,12 @@ import Foundation
 
 struct OnboardingStepResponse: Decodable {
     let id: UUID
+    let nextStepID: UUID?
     let type: OnboardingStepType
 
     enum CodingKeys: String, CodingKey {
         case id
+        case nextStepID
         case type
         case payload
     }
@@ -20,6 +22,7 @@ struct OnboardingStepResponse: Decodable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(UUID.self, forKey: .id)
+        nextStepID = try container.decodeIfPresent(UUID.self, forKey: .nextStepID)
         let type = try container.decode(String.self, forKey: .type)
         switch type {
         case "multipleAnswer":

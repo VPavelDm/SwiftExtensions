@@ -7,11 +7,31 @@
 
 import Foundation
 
-enum OnboardingStep: Sendable, Equatable, Hashable {
-    case oneAnswer(OneAnswerStep)
-    case binaryAnswer(BinaryAnswerStep)
-    case multipleAnswer(MultipleAnswerStep)
-    case description(DescriptionStep)
+struct OnboardingStep: Sendable, Equatable, Hashable {
+    var id: UUID
+    var nextStepID: UUID?
+    var type: OnboardingStepType
+
+    enum OnboardingStepType: Sendable, Equatable, Hashable {
+        case oneAnswer(OneAnswerStep)
+        case binaryAnswer(BinaryAnswerStep)
+        case multipleAnswer(MultipleAnswerStep)
+        case description(DescriptionStep)
+        case unknown
+    }
+}
+
+// MARK: -
+
+extension OnboardingStep {
+
+    var isNotUnknown: Bool {
+        if case OnboardingStepType.unknown = type {
+            return false
+        } else {
+            return true
+        }
+    }
 }
 
 // MARK: - Convert
@@ -19,13 +39,16 @@ enum OnboardingStep: Sendable, Equatable, Hashable {
 extension OnboardingStep {
 
     init?(response: OnboardingStepResponse) {
-        switch response.type {
-        case .oneAnswer(let payload):
-            self = .oneAnswer(OneAnswerStep(response: payload))
-        case .multipleAnswer(let payload):
-            self = .multipleAnswer(MultipleAnswerStep(response: payload))
-        default:
-            return nil
+        let type: OnboardingStepType = switch response.type {
+        case .oneAnswer(let payload): .oneAnswer(OneAnswerStep(response: payload))
+        case .multipleAnswer(let payload): .multipleAnswer(MultipleAnswerStep(response: payload))
+        default: .unknown
         }
+
+        self.init(
+            id: response.id,
+            nextStepID: response.nextStepID,
+            type: type
+        )
     }
 }

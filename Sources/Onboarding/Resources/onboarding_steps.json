@@ -2,6 +2,7 @@
     {
         "id": "C34BD07B-CA60-41CE-8377-D749D4B196F4",
         "type": "multipleAnswer",
+        "nextStepID": "874CFA8E-029C-4073-9E12-9A2EEA2CC20A",
         "payload": {
             "title": "What challenges did you face?",
             "description": "Choose at least one option",
