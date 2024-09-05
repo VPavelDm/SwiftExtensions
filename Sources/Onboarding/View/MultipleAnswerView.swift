@@ -1,0 +1,101 @@
+//
+//  SwiftUIView.swift
+//  
+//
+//  Created by Pavel Vaitsikhouski on 05.09.24.
+//
+
+import SwiftUI
+import CoreUI
+import CoreHaptics
+
+struct MultipleAnswerView: View {
+    @Environment(\.colorPalette) private var colorPalette
+    
+    @State private var answers: [BoxModel]
+    private let step: MultipleAnswerStep
+
+    init(step: MultipleAnswerStep) {
+        self.step = step
+        self.answers = step.answers.map { answer in BoxModel(value: answer) }
+    }
+
+    var body: some View {
+        VStack {
+            scrollView
+            nextButton
+        }
+        .background(colorPalette.backgroundColor)
+    }
+
+    private var scrollView: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 24) {
+                VStack(alignment: .leading) {
+                    titleView
+                    descriptionView
+                }
+                VStack(alignment: .leading, spacing: 12) {
+                    ForEach($answers) { answer in
+                        buttonView(answer: answer)
+                    }
+                }
+            }
+            .padding([.horizontal, .top])
+        }
+    }
+
+    private var titleView: some View {
+        Text(step.question)
+            .font(.title)
+            .fontWeight(.bold)
+            .foregroundStyle(colorPalette.primaryTextColor)
+    }
+
+    @ViewBuilder
+    private var descriptionView: some View {
+        if let description = step.description {
+            Text(description)
+                .font(.headline)
+                .foregroundStyle(colorPalette.secondaryTextColor)
+        }
+    }
+
+    private func buttonView(answer: Binding<BoxModel>) -> some View {
+        Button {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            answer.wrappedValue.isChose.toggle()
+        } label: {
+            HStack {
+                Text(answer.wrappedValue.value)
+                Spacer()
+                CheckBox(isChose: answer.isChose)
+                    .allowsHitTesting(false)
+                    .foregroundStyle(colorPalette.primaryButtonBackgroundColor)
+            }
+        }
+        .buttonStyle(MultipleAnswerButtonStyle())
+    }
+
+    private var nextButton: some View {
+        Button {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        } label: {
+            Text("Next")
+        }
+        .buttonStyle(PrimaryButtonStyle())
+        .padding([.horizontal, .bottom])
+    }
+
+    // MARK: -
+
+    private struct BoxModel: Identifiable {
+        var id: String { value }
+        var isChose: Bool = false
+        var value: String
+    }
+}
+
+#Preview {
+    MultipleAnswerView(step: .testData())
+}
