@@ -6,20 +6,37 @@
 //
 
 import SwiftUI
+import CoreUI
 
 public struct OnboardingView: View {
+    @StateObject private var viewModel: OnboardingViewModel
+
+    @State private var showError: Bool = false
+
     let colorPalette: ColorPalette
 
-    public init(colorPalette: ColorPalette) {
-        self.colorPalette = colorPalette
+    public init(configuration: OnboardingConfiguration) {
+        self._viewModel = StateObject(wrappedValue: OnboardingViewModel(configuration: configuration))
+        self.colorPalette = configuration.colorPalette
     }
 
     public var body: some View {
-        Text("Hello, World!")
+        contentView
             .environment(\.colorPalette, colorPalette)
+            .onFirstAppear {
+                do {
+                    try await viewModel.fetchSteps()
+                } catch {
+                    showError = true
+                }
+            }
+    }
+
+    private var contentView: some View {
+        Text("Hello, World!")
     }
 }
 
 #Preview {
-    OnboardingView(colorPalette: .testData)
+    OnboardingView(configuration: .testData())
 }
