@@ -9,11 +9,11 @@ import Foundation
 
 public struct OnboardingConfiguration {
 
-    let fileName: String
+    let url: URL
     let colorPalette: ColorPalette
 
-    public init(fileName: String, colorPalette: ColorPalette) {
-        self.fileName = fileName
+    public init(url: URL, colorPalette: ColorPalette) {
+        self.url = url
         self.colorPalette = colorPalette
     }
 }

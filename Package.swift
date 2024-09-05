@@ -31,10 +31,12 @@ let package = Package(
                 name: "Onboarding",
                 dependencies: [
                     "CoreUI"
+                ],
+                resources: [
+                    .process("Resources")
                 ]),
 
             .target(
                 name: "CoreUI"),
-
     ]
 )

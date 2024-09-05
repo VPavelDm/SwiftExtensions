@@ -12,20 +12,19 @@ final class OnboardingService {
     // MARK: - Properties
 
     let configuration: OnboardingConfiguration
+    let session: URLSession
 
     // MARK: - Inits
 
-    init(configuration: OnboardingConfiguration) {
+    init(configuration: OnboardingConfiguration, session: URLSession = .shared) {
         self.configuration = configuration
+        self.session = session
     }
 
     // MARK: - Intents
 
     func fetchSteps() async throws -> [OnboardingStep] {
-        guard let fileURL = Bundle.main.url(forResource: configuration.fileName, withExtension: "json") else {
-            throw OnboardingError.fileDoesNotExist
-        }
-        let data = try Data(contentsOf: fileURL)
+        let (data, _) = try await session.data(from: configuration.url)
         let steps = try JSONDecoder().decode([OnboardingStepResponse].self, from: data)
         return steps.compactMap(OnboardingStep.init(response:))
     }

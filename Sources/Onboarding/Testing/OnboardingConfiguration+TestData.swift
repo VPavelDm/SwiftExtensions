@@ -11,7 +11,7 @@ extension OnboardingConfiguration {
 
     static func testData() -> Self {
         Self(
-            fileName: "onboarding_steps",
+            url: URL(string: "https://google.com")!,
             colorPalette: .testData
         )
     }
