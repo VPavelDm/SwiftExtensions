@@ -51,7 +51,8 @@ public struct OnboardingView: View {
                     MultipleAnswerView(step: multipleAnswerStep)
                         .transition(transitionAnimation)
                 case .description(let descriptionStep):
-                    Text("Description")
+                    DescriptionStepView(step: descriptionStep)
+                        .transition(transitionAnimation)
                 case .unknown:
                     EmptyView()
                 }

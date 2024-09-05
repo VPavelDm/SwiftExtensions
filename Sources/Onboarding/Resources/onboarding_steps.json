@@ -19,6 +19,7 @@
     {
         "id": "874CFA8E-029C-4073-9E12-9A2EEA2CC20A",
         "type": "oneAnswer",
+        "nextStepID": "D956D79D-5B4D-414A-8335-CFE957FD3FEF",
         "payload": {
             "title": "What's your main goal?",
             "description": "Choose only one answer",
@@ -29,6 +30,18 @@
                 "💪 Build weight",
                 "💬 Something else",
             ]
+        }
+    },
+    {
+        "id": "D956D79D-5B4D-414A-8335-CFE957FD3FEF",
+        "type": "description",
+        "payload": {
+            "title": "Awesome! That's a great starting point.",
+            "description": "Studies have shown that regularly tracking your calories is directly linked to the self-motivation needed to successfully lose weight!",
+            "image": {
+                "type": "named",
+                "value": "womanWithTeleskope"
+            }
         }
     },
 ]

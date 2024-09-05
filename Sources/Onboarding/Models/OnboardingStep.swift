@@ -42,6 +42,7 @@ extension OnboardingStep {
         let type: OnboardingStepType = switch response.type {
         case .oneAnswer(let payload): .oneAnswer(OneAnswerStep(response: payload))
         case .multipleAnswer(let payload): .multipleAnswer(MultipleAnswerStep(response: payload))
+        case .description(let payload): .description(DescriptionStep(response: payload))
         default: .unknown
         }
 

@@ -87,6 +87,7 @@ struct MultipleAnswerView: View {
         }
         .buttonStyle(PrimaryButtonStyle())
         .padding([.horizontal, .bottom])
+        .disabled(!answers.contains(where: { $0.isChose }))
     }
 
     // MARK: -

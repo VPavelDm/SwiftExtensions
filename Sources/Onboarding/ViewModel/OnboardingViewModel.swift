@@ -12,13 +12,14 @@ final class OnboardingViewModel: ObservableObject {
 
     // MARK: - Properties
 
-    private let configuration: OnboardingConfiguration
     private let service: OnboardingService
 
     // MARK: - Outputs
 
     @Published var steps: [OnboardingStep] = []
     @Published var currentStep: OnboardingStep?
+
+    let configuration: OnboardingConfiguration
 
     // MARK: - Inits
 

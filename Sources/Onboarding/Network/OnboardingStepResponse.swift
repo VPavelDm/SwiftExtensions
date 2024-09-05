@@ -31,6 +31,9 @@ struct OnboardingStepResponse: Decodable {
         case "oneAnswer":
             let payload = try container.decode(OneAnswerStep.self, forKey: .payload)
             self.type = .oneAnswer(payload)
+        case "description":
+            let payload = try container.decode(DescriptionStep.self, forKey: .payload)
+            self.type = .description(payload)
         default:
             self.type = .unknown
         }
@@ -39,6 +42,7 @@ struct OnboardingStepResponse: Decodable {
     enum OnboardingStepType {
         case oneAnswer(OneAnswerStep)
         case multipleAnswer(MultipleAnswerStep)
+        case description(DescriptionStep)
         case unknown
     }
 
@@ -52,5 +56,16 @@ struct OnboardingStepResponse: Decodable {
         let title: String
         let description: String?
         let answers: [String]
+    }
+
+    struct DescriptionStep: Decodable {
+        let title: String
+        let image: ImageResponse?
+        let description: String?
+    }
+
+    struct ImageResponse: Decodable {
+        let type: String
+        let value: String
     }
 }
