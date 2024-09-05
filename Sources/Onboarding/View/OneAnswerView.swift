@@ -12,14 +12,6 @@ struct OneAnswerView: View {
     var step: OneAnswerStep
 
     var body: some View {
-        VStack {
-            scrollView
-            continueButton
-        }
-        .background(colorPalette.backgroundColor)
-    }
-
-    private var scrollView: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 VStack(alignment: .leading) {
@@ -34,6 +26,7 @@ struct OneAnswerView: View {
             }
             .padding()
         }
+        .background(colorPalette.backgroundColor)
     }
 
     private var titleView: some View {
@@ -57,14 +50,6 @@ struct OneAnswerView: View {
             Text(answer)
         }
         .buttonStyle(SecondaryButtonStyle())
-    }
-
-    private var continueButton: some View {
-        Button {} label: {
-            Text("Continue")
-        }
-        .buttonStyle(PrimaryButtonStyle())
-        .padding([.horizontal, .bottom])
     }
 }
 
