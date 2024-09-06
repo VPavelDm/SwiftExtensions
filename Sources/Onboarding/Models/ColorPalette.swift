@@ -13,8 +13,10 @@ public struct ColorPalette: Sendable {
     let secondaryTextColor: Color
     let primaryButtonTextColor: Color
     let primaryButtonBackgroundColor: Color
-    let buttonTextColor: Color
-    let buttonBackgroundColor: Color
+    let secondaryButtonTextColor: Color
+    let secondaryButtonBackgroundColor: Color
+    let progressBarColor: Color
+    let progressBarBackgroundColor: Color
 
     public init(
         backgroundColor: Color,
@@ -22,16 +24,20 @@ public struct ColorPalette: Sendable {
         secondaryTextColor: Color,
         primaryButtonTextColor: Color,
         primaryButtonBackgroundColor: Color,
-        buttonTextColor: Color,
-        buttonBackgroundColor: Color
+        secondaryButtonTextColor: Color,
+        secondaryButtonBackgroundColor: Color,
+        progressBarColor: Color,
+        progressBarBackgroundColor: Color
     ) {
         self.backgroundColor = backgroundColor
         self.primaryTextColor = primaryTextColor
         self.secondaryTextColor = secondaryTextColor
         self.primaryButtonTextColor = primaryButtonTextColor
         self.primaryButtonBackgroundColor = primaryButtonBackgroundColor
-        self.buttonTextColor = buttonTextColor
-        self.buttonBackgroundColor = buttonBackgroundColor
+        self.secondaryButtonTextColor = secondaryButtonTextColor
+        self.secondaryButtonBackgroundColor = secondaryButtonBackgroundColor
+        self.progressBarColor = progressBarColor
+        self.progressBarBackgroundColor = progressBarBackgroundColor
     }
 }
 

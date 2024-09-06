@@ -40,6 +40,12 @@ public struct OnboardingView: View {
     @ViewBuilder
     private var contentView: some View {
         VStack {
+            HStack {
+                backButton
+                progressBarView
+                backButton.opacity(0)
+            }
+            .padding([.horizontal, .top])
             if let currentStep = viewModel.currentStep {
                 switch currentStep.type {
                 case .oneAnswer(let oneAnswerStep):
@@ -60,6 +66,22 @@ public struct OnboardingView: View {
             }
         }
         .animation(.easeInOut, value: viewModel.currentStep)
+    }
+
+    private var backButton: some View {
+        Button {} label: {
+            Image(systemName: "chevron.compact.left")
+                .resizable()
+                .font(.system(size: 12, weight: .light))
+                .frame(width: 12, height: 16)
+                .frame(width: 20)
+                .foregroundStyle(colorPalette.primaryTextColor)
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+
+    private var progressBarView: some View {
+        ProgressBarView(completed: viewModel.passedStepsProcent)
     }
 
     private var contentLoadingView: some View {

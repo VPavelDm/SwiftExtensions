@@ -12,11 +12,11 @@ struct BinaryAnswerButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .foregroundStyle(colorPalette.buttonTextColor)
+            .foregroundStyle(colorPalette.secondaryButtonTextColor)
             .font(.system(size: 18, weight: .semibold))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .aspectRatio(1.2, contentMode: .fit)
-            .background(colorPalette.buttonBackgroundColor)
+            .background(colorPalette.secondaryButtonBackgroundColor)
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .scaleEffect(x: configuration.isPressed ? 0.95 : 1, y: configuration.isPressed ? 0.95 : 1)
     }

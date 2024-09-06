@@ -16,8 +16,10 @@ extension ColorPalette {
             secondaryTextColor: Color(hex: "DADCE2"),
             primaryButtonTextColor: Color(hex: "F0F2F5"),
             primaryButtonBackgroundColor: Color(hex: "0589D6"),
-            buttonTextColor: Color(hex: "F0F2F5"),
-            buttonBackgroundColor: Color(hex: "1F2A37")
+            secondaryButtonTextColor: Color(hex: "F0F2F5"),
+            secondaryButtonBackgroundColor: Color(hex: "1F2A37"),
+            progressBarColor: Color(hex: "0589D6"),
+            progressBarBackgroundColor: Color(hex: "29303C")
         )
     }
 }

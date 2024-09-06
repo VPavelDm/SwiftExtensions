@@ -18,6 +18,11 @@ final class OnboardingViewModel: ObservableObject {
 
     @Published var steps: [OnboardingStep] = []
     @Published var currentStep: OnboardingStep?
+    @Published var passedStepsAmount: Int = 0
+
+    var passedStepsProcent: CGFloat {
+        max(CGFloat(passedStepsAmount) / CGFloat(steps.count), 0.05)
+    }
 
     let configuration: OnboardingConfiguration
 
@@ -39,5 +44,6 @@ final class OnboardingViewModel: ObservableObject {
     func onAnswer() {
         guard let nextStepIndex = steps.firstIndex(where: { $0.id == currentStep?.nextStepID }) else { return }
         currentStep = steps[nextStepIndex]
+        passedStepsAmount += 1
     }
 }
