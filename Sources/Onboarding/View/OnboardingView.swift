@@ -41,7 +41,7 @@ public struct OnboardingView: View {
     private var contentView: some View {
         VStack {
             HStack {
-                backButton
+                backButton.opacity(viewModel.passedSteps.isEmpty ? 0 : 1)
                 progressBarView
                 backButton.opacity(0)
             }
@@ -69,7 +69,9 @@ public struct OnboardingView: View {
     }
 
     private var backButton: some View {
-        Button {} label: {
+        Button {
+            viewModel.onBack()
+        } label: {
             Image(systemName: "chevron.compact.left")
                 .resizable()
                 .font(.system(size: 12, weight: .light))

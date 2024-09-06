@@ -11,6 +11,7 @@ struct OnboardingStep: Sendable, Equatable, Hashable {
     var id: UUID
     var nextStepID: UUID?
     var type: OnboardingStepType
+    var maxStepsInChain: Int
 
     enum OnboardingStepType: Sendable, Equatable, Hashable {
         case oneAnswer(OneAnswerStep)
@@ -50,7 +51,8 @@ extension OnboardingStep {
         self.init(
             id: response.id,
             nextStepID: response.nextStepID,
-            type: type
+            type: type,
+            maxStepsInChain: response.maxStepsInChain
         )
     }
 }

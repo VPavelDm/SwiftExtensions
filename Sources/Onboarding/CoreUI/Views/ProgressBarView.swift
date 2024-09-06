@@ -22,7 +22,7 @@ struct ProgressBarView: View {
             Rectangle()
                 .fill(colorPalette.progressBarColor)
                 .frame(width: size.width * completed)
-                .clipShape(ProgressBarShape(isCompleted: false))
+                .clipShape(ProgressBarShape(isCompleted: completed == 1))
                 .animation(.spring(duration: 0.35, bounce: 0.35), value: completed)
         }
         .frame(height: .size)
