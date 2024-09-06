@@ -46,7 +46,8 @@ public struct OnboardingView: View {
                     OneAnswerView(step: oneAnswerStep)
                         .transition(transitionAnimation)
                 case .binaryAnswer(let binaryAnswerStep):
-                    Text("Binary")
+                    BinaryAnswerView(step: binaryAnswerStep)
+                        .transition(transitionAnimation)
                 case .multipleAnswer(let multipleAnswerStep):
                     MultipleAnswerView(step: multipleAnswerStep)
                         .transition(transitionAnimation)

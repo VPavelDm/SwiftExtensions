@@ -35,12 +35,29 @@
     {
         "id": "D956D79D-5B4D-414A-8335-CFE957FD3FEF",
         "type": "description",
+        "nextStepID": "6021CABF-377B-4B9E-A488-1DF90888FDDD",
         "payload": {
             "title": "Awesome! That's a great starting point.",
             "description": "Studies have shown that regularly tracking your calories is directly linked to the self-motivation needed to successfully lose weight!",
             "image": {
                 "type": "named",
                 "value": "womanWithTeleskope"
+            }
+        }
+    },
+    {
+        "id": "6021CABF-377B-4B9E-A488-1DF90888FDDD",
+        "type": "binaryAnswer",
+        "payload": {
+            "title": "What's your sex?",
+            "description": "Since the formula for an accurate calorie calculation differs based on sex, we need this information to calculate your daily calorie goal.",
+            "firstAnswer": {
+                "text": "Female",
+                "icon": "🚺"
+            },
+            "secondAnswer": {
+                "text": "Male",
+                "icon": "🚹"
             }
         }
     },

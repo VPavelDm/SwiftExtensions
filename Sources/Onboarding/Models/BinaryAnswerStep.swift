@@ -8,8 +8,33 @@
 import Foundation
 
 struct BinaryAnswerStep: Sendable, Equatable, Hashable {
-    let question: String
+    let title: String
     let description: String?
-    let firstAnswer: String
-    let secondAnswer: String
+    let firstAnswer: Answer
+    let secondAnswer: Answer
+
+    struct Answer: Sendable, Equatable, Hashable {
+        let text: String
+        let icon: String?
+    }
+}
+
+// MARK: - Convert
+
+extension BinaryAnswerStep {
+
+    init(response: OnboardingStepResponse.BinaryAnswer) {
+        self.init(
+            title: response.title,
+            description: response.description,
+            firstAnswer: Answer(
+                text: response.firstAnswer.text,
+                icon: response.firstAnswer.icon
+            ),
+            secondAnswer: Answer(
+                text: response.secondAnswer.text,
+                icon: response.secondAnswer.icon
+            )
+        )
+    }
 }

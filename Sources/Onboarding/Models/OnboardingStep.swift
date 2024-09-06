@@ -43,6 +43,7 @@ extension OnboardingStep {
         case .oneAnswer(let payload): .oneAnswer(OneAnswerStep(response: payload))
         case .multipleAnswer(let payload): .multipleAnswer(MultipleAnswerStep(response: payload))
         case .description(let payload): .description(DescriptionStep(response: payload))
+        case .binaryAnswer(let payload): .binaryAnswer(BinaryAnswerStep(response: payload))
         default: .unknown
         }
 
