@@ -15,14 +15,17 @@ public struct OnboardingView: View {
 
     let colorPalette: ColorPalette
 
-    public init(configuration: OnboardingConfiguration) {
-        self._viewModel = StateObject(wrappedValue: OnboardingViewModel(configuration: configuration))
+    public init(configuration: OnboardingConfiguration, completion: @escaping ([UserAnswer]) -> Void) {
+        self._viewModel = StateObject(wrappedValue: OnboardingViewModel(
+            configuration: configuration,
+            completion: completion
+        ))
         self.colorPalette = configuration.colorPalette
     }
 
     public var body: some View {
         contentView
-            .progressView(isVisible: viewModel.passedSteps.last == nil) {
+            .progressView(isVisible: viewModel.currentStep == nil) {
                 contentLoadingView
             }
             .environment(\.colorPalette, colorPalette)
@@ -41,7 +44,7 @@ public struct OnboardingView: View {
         VStack {
             customToolbarView
             NavigationStack(path: $viewModel.passedSteps) {
-                navigationStackContentView(step: viewModel.passedSteps.last)
+                navigationStackContentView(step: viewModel.steps.first)
                     .navigationDestination(for: OnboardingStep.self, destination: navigationStackContentView(step:))
             }
             .environmentObject(viewModel)
@@ -51,8 +54,8 @@ public struct OnboardingView: View {
     private var customToolbarView: some View {
         HStack {
             backButton
-                .opacity(viewModel.passedSteps.count == 1 ? 0 : 1)
-                .animation(.easeInOut, value: viewModel.passedSteps.count == 1)
+                .opacity(viewModel.userAnswers.isEmpty ? 0 : 1)
+                .animation(.easeInOut, value: viewModel.userAnswers.isEmpty)
             ProgressBarView(completed: viewModel.passedStepsProcent)
             backButton.opacity(0)
         }
@@ -79,7 +82,7 @@ public struct OnboardingView: View {
 
     var backButton: some View {
         BackButton {
-            viewModel.passedSteps.removeLast()
+            viewModel.onBack()
         }
     }
 
@@ -92,5 +95,5 @@ public struct OnboardingView: View {
 }
 
 #Preview {
-    OnboardingView(configuration: .testData())
+    OnboardingView(configuration: .testData(), completion: { _ in})
 }

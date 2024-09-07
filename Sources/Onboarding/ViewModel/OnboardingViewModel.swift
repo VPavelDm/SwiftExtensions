@@ -18,6 +18,8 @@ final class OnboardingViewModel: ObservableObject {
 
     @Published var steps: [OnboardingStep] = []
     @Published var passedSteps: [OnboardingStep] = []
+    @Published var currentStep: OnboardingStep?
+    @Published var userAnswers: [UserAnswer] = []
 
     var passedStepsProcent: CGFloat {
         guard let maxStepsInChain = passedSteps.last?.maxStepsInChain else { return 1 }
@@ -25,12 +27,14 @@ final class OnboardingViewModel: ObservableObject {
     }
 
     let configuration: OnboardingConfiguration
+    let completion: ([UserAnswer]) -> Void
 
     // MARK: - Inits
 
-    init(configuration: OnboardingConfiguration) {
+    init(configuration: OnboardingConfiguration, completion: @escaping ([UserAnswer]) -> Void) {
         self.configuration = configuration
         self.service = OnboardingService(configuration: configuration)
+        self.completion = completion
     }
 
     // MARK: - Intents
@@ -40,16 +44,25 @@ final class OnboardingViewModel: ObservableObject {
             .filter(\.isNotUnknown)
         guard let firstStep = steps.first else { throw OnboardingError.noSteps }
         passedSteps.append(firstStep)
+        self.currentStep = firstStep
     }
 
-    func onAnswer() {
-        guard let nextStepIndex = steps.firstIndex(where: { $0.id == passedSteps.last?.nextStepID }) else { return }
+    func onAnswer(answers: [String] = []) {
+        guard let currentStep else { return }
+        userAnswers.append(UserAnswer(onboardingStepID: currentStep.id, answers: answers))
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-        passedSteps.append(steps[nextStepIndex])
+
+        if let nextStepIndex = steps.firstIndex(where: { $0.id == passedSteps.last?.nextStepID }) {
+            passedSteps.append(steps[nextStepIndex])
+            self.currentStep = passedSteps.last
+        } else {
+            completion(userAnswers)
+        }
     }
 
     func onBack() {
-        guard passedSteps.count > 1 else { return }
+        userAnswers.removeLast()
         passedSteps.removeLast()
+        currentStep = passedSteps.last
     }
 }

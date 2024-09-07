@@ -39,5 +39,5 @@ struct ProgressBarShape: Shape {
 }
 
 #Preview {
-    OnboardingView(configuration: .testData())
+    OnboardingView(configuration: .testData(), completion: { _ in})
 }

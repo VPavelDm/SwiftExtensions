@@ -49,7 +49,7 @@ struct OneAnswerView: View {
 
     private func buttonView(answer: String) -> some View {
         Button {
-            viewModel.onAnswer()
+            viewModel.onAnswer(answers: [answer])
         } label: {
             Text(answer)
         }
