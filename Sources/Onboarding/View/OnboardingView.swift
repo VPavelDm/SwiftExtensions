@@ -15,7 +15,7 @@ public struct OnboardingView: View {
 
     let colorPalette: ColorPalette
 
-    public init(configuration: OnboardingConfiguration, completion: @escaping () -> Void) {
+    public init(configuration: OnboardingConfiguration, completion: @escaping ([UserAnswer]) -> Void) {
         self._viewModel = StateObject(wrappedValue: OnboardingViewModel(
             configuration: configuration,
             completion: completion
@@ -95,5 +95,5 @@ public struct OnboardingView: View {
 }
 
 #Preview {
-    OnboardingView(configuration: .testData(), completion: {})
+    OnboardingView(configuration: .testData(), completion: { _ in})
 }

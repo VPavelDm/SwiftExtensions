@@ -27,11 +27,11 @@ final class OnboardingViewModel: ObservableObject {
     }
 
     let configuration: OnboardingConfiguration
-    let completion: () -> Void
+    let completion: ([UserAnswer]) -> Void
 
     // MARK: - Inits
 
-    init(configuration: OnboardingConfiguration, completion: @escaping () -> Void) {
+    init(configuration: OnboardingConfiguration, completion: @escaping ([UserAnswer]) -> Void) {
         self.configuration = configuration
         self.service = OnboardingService(configuration: configuration)
         self.completion = completion
@@ -56,7 +56,7 @@ final class OnboardingViewModel: ObservableObject {
             passedSteps.append(steps[nextStepIndex])
             self.currentStep = passedSteps.last
         } else {
-            completion()
+            completion(userAnswers)
         }
     }
 

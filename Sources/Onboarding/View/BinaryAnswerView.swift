@@ -78,5 +78,5 @@ struct BinaryAnswerView: View {
 
 #Preview {
     BinaryAnswerView(step: .testData())
-        .environmentObject(OnboardingViewModel(configuration: .testData(), completion: {}))
+        .environmentObject(OnboardingViewModel(configuration: .testData(), completion: { _ in}))
 }
