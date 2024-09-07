@@ -8,19 +8,25 @@
 import SwiftUI
 import CoreUI
 
-public struct OnboardingView: View {
+public struct OnboardingView<OuterScreen>: View where OuterScreen: View {
     @StateObject private var viewModel: OnboardingViewModel
 
     @State private var showError: Bool = false
 
     let colorPalette: ColorPalette
+    let outerScreen: (OnboardingOuterScreenCallbackParams) -> OuterScreen
 
-    public init(configuration: OnboardingConfiguration, completion: @escaping ([UserAnswer]) -> Void) {
+    public init(
+        configuration: OnboardingConfiguration,
+        @ViewBuilder outerScreen: @escaping (OnboardingOuterScreenCallbackParams) -> OuterScreen,
+        completion: @escaping ([UserAnswer]) -> Void
+    ) {
         self._viewModel = StateObject(wrappedValue: OnboardingViewModel(
             configuration: configuration,
             completion: completion
         ))
         self.colorPalette = configuration.colorPalette
+        self.outerScreen = outerScreen
     }
 
     public var body: some View {
@@ -73,6 +79,12 @@ public struct OnboardingView: View {
                 MultipleAnswerView(step: multipleAnswerStep)
             case .description(let descriptionStep):
                 DescriptionStepView(step: descriptionStep)
+            case .login:
+                outerScreen((.login, handleOuterScreenCallback))
+            case .custom:
+                if let stepID = step?.id {
+                    outerScreen((.custom(stepID), handleOuterScreenCallback))
+                }
             case .unknown, .none:
                 EmptyView()
             }
@@ -92,8 +104,20 @@ public struct OnboardingView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(colorPalette.backgroundColor)
     }
+
+    private func handleOuterScreenCallback() {
+        viewModel.onAnswer()
+    }
 }
 
 #Preview {
-    OnboardingView(configuration: .testData(), completion: { _ in})
+    OnboardingView(
+        configuration: .testData(),
+        outerScreen: { type, completion in
+            Button(action: completion, label: {
+                Text("Next")
+            })
+        },
+        completion: { _ in}
+    )
 }

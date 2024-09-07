@@ -18,6 +18,8 @@ struct OnboardingStep: Sendable, Equatable, Hashable {
         case binaryAnswer(BinaryAnswerStep)
         case multipleAnswer(MultipleAnswerStep)
         case description(DescriptionStep)
+        case login
+        case custom
         case unknown
     }
 }
@@ -45,6 +47,8 @@ extension OnboardingStep {
         case .multipleAnswer(let payload): .multipleAnswer(MultipleAnswerStep(response: payload))
         case .description(let payload): .description(DescriptionStep(response: payload))
         case .binaryAnswer(let payload): .binaryAnswer(BinaryAnswerStep(response: payload))
+        case .login: .login
+        case .custom: .custom
         default: .unknown
         }
 
