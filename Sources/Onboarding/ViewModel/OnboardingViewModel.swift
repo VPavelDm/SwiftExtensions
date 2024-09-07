@@ -25,12 +25,14 @@ final class OnboardingViewModel: ObservableObject {
     }
 
     let configuration: OnboardingConfiguration
+    let completion: () -> Void
 
     // MARK: - Inits
 
-    init(configuration: OnboardingConfiguration) {
+    init(configuration: OnboardingConfiguration, completion: @escaping () -> Void) {
         self.configuration = configuration
         self.service = OnboardingService(configuration: configuration)
+        self.completion = completion
     }
 
     // MARK: - Intents
@@ -43,9 +45,12 @@ final class OnboardingViewModel: ObservableObject {
     }
 
     func onAnswer() {
-        guard let nextStepIndex = steps.firstIndex(where: { $0.id == passedSteps.last?.nextStepID }) else { return }
-        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-        passedSteps.append(steps[nextStepIndex])
+        if let nextStepIndex = steps.firstIndex(where: { $0.id == passedSteps.last?.nextStepID }) {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            passedSteps.append(steps[nextStepIndex])
+        } else {
+            completion()
+        }
     }
 
     func onBack() {
