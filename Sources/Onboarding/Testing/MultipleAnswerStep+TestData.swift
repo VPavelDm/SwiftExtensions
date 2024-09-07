@@ -11,7 +11,7 @@ extension MultipleAnswerStep {
 
     static func testData() -> Self {
         Self(
-            question: "What challenges did you face?",
+            title: "What challenges did you face?",
             description: "Choose at least one option",
             answers: [
                 "🍟 Resting cravings",

@@ -11,7 +11,7 @@ extension OneAnswerStep {
 
     static func testData() -> Self {
         Self(
-            question: "What's your main goal?",
+            title: "What's your main goal?",
             description: "Choose only one answer",
             answers: [
                 "📉 Lose weight",

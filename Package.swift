@@ -7,7 +7,7 @@ let package = Package(
     name: "SwiftExtensions",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v16)
     ],
     products: [
         .library(
@@ -31,10 +31,12 @@ let package = Package(
                 name: "Onboarding",
                 dependencies: [
                     "CoreUI"
+                ],
+                resources: [
+                    .process("Resources")
                 ]),
 
             .target(
                 name: "CoreUI"),
-
     ]
 )

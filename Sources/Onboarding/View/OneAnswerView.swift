@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OneAnswerView: View {
     @Environment(\.colorPalette) private var colorPalette
+    @EnvironmentObject private var viewModel: OnboardingViewModel
+
     var step: OneAnswerStep
 
     var body: some View {
@@ -30,7 +32,7 @@ struct OneAnswerView: View {
     }
 
     private var titleView: some View {
-        Text(step.question)
+        Text(step.title)
             .font(.title)
             .fontWeight(.bold)
             .foregroundStyle(colorPalette.primaryTextColor)
@@ -46,7 +48,10 @@ struct OneAnswerView: View {
     }
 
     private func buttonView(answer: String) -> some View {
-        Button {} label: {
+        Button {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            viewModel.onAnswer()
+        } label: {
             Text(answer)
         }
         .buttonStyle(SecondaryButtonStyle())

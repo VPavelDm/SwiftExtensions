@@ -8,7 +8,20 @@
 import Foundation
 
 struct OneAnswerStep: Sendable, Equatable, Hashable {
-    let question: String
+    let title: String
     let description: String?
     let answers: [String]
+}
+
+// MARK: - Convert
+
+extension OneAnswerStep {
+
+    init(response: OnboardingStepResponse.OneAnswerStep) {
+        self.init(
+            title: response.title,
+            description: response.description,
+            answers: response.answers
+        )
+    }
 }

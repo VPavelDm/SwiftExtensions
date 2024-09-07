@@ -11,7 +11,8 @@ import CoreHaptics
 
 struct MultipleAnswerView: View {
     @Environment(\.colorPalette) private var colorPalette
-    
+    @EnvironmentObject private var viewModel: OnboardingViewModel
+
     @State private var answers: [BoxModel]
     private let step: MultipleAnswerStep
 
@@ -46,7 +47,7 @@ struct MultipleAnswerView: View {
     }
 
     private var titleView: some View {
-        Text(step.question)
+        Text(step.title)
             .font(.title)
             .fontWeight(.bold)
             .foregroundStyle(colorPalette.primaryTextColor)
@@ -80,19 +81,28 @@ struct MultipleAnswerView: View {
     private var nextButton: some View {
         Button {
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            viewModel.onAnswer()
         } label: {
             Text("Next")
         }
         .buttonStyle(PrimaryButtonStyle())
         .padding([.horizontal, .bottom])
+        .disabled(answers.isDisabled)
+        .animation(.easeInOut, value: answers.isDisabled)
     }
 
-    // MARK: -
+}
 
-    private struct BoxModel: Identifiable {
-        var id: String { value }
-        var isChose: Bool = false
-        var value: String
+private struct BoxModel: Identifiable {
+    var id: String { value }
+    var isChose: Bool = false
+    var value: String
+}
+
+private extension Array where Element == BoxModel {
+
+    var isDisabled: Bool {
+        !contains(where: { element in element.isChose })
     }
 }
 

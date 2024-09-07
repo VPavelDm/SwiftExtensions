@@ -9,6 +9,13 @@ import Foundation
 
 public struct OnboardingConfiguration {
 
-    let json: String
+    let url: URL
     let colorPalette: ColorPalette
+    let bundle: Bundle
+
+    public init(url: URL, colorPalette: ColorPalette, bundle: Bundle = .main) {
+        self.url = url
+        self.colorPalette = colorPalette
+        self.bundle = bundle
+    }
 }

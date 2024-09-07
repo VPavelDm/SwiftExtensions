@@ -7,12 +7,13 @@
 
 import Foundation
 
-extension OnboardingConfiguration {
+public extension OnboardingConfiguration {
 
     static func testData() -> Self {
         Self(
-            json: "",
-            colorPalette: .testData
+            url: Bundle.module.url(forResource: "onboarding_steps", withExtension: "json")!,
+            colorPalette: .testData,
+            bundle: .module
         )
     }
 }
