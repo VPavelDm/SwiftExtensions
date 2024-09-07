@@ -44,6 +44,8 @@ struct OnboardingStepResponse: Decodable {
             self.type = .login
         case "custom":
             self.type = .custom
+        case "prime":
+            self.type = .prime
         default:
             self.type = .unknown
         }
@@ -56,6 +58,7 @@ struct OnboardingStepResponse: Decodable {
         case binaryAnswer(BinaryAnswer)
         case login
         case custom
+        case prime
         case unknown
     }
 

@@ -85,6 +85,8 @@ public struct OnboardingView<OuterScreen>: View where OuterScreen: View {
                 if let stepID = step?.id {
                     outerScreen((.custom(stepID), handleOuterScreenCallback))
                 }
+            case .prime:
+                outerScreen((.prime, handleOuterScreenCallback))
             case .unknown, .none:
                 EmptyView()
             }

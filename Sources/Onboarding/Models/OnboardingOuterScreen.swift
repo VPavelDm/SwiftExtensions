@@ -10,4 +10,5 @@ import Foundation
 public enum OnboardingOuterScreen {
     case login
     case custom(UUID)
+    case prime
 }

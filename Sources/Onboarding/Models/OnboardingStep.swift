@@ -20,6 +20,7 @@ struct OnboardingStep: Sendable, Equatable, Hashable {
         case description(DescriptionStep)
         case login
         case custom
+        case prime
         case unknown
     }
 }
@@ -49,6 +50,7 @@ extension OnboardingStep {
         case .binaryAnswer(let payload): .binaryAnswer(BinaryAnswerStep(response: payload))
         case .login: .login
         case .custom: .custom
+        case .prime: .prime
         default: .unknown
         }
 
