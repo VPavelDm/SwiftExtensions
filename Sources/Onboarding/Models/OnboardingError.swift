@@ -10,4 +10,5 @@ import Foundation
 enum OnboardingError: Error {
     case fileDoesNotExist
     case dataFetching
+    case noSteps
 }

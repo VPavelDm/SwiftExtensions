@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension OnboardingConfiguration {
+public extension OnboardingConfiguration {
 
     static func testData() -> Self {
         Self(

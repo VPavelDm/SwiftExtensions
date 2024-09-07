@@ -22,7 +22,7 @@ public struct OnboardingView: View {
 
     public var body: some View {
         contentView
-            .progressView(isVisible: viewModel.currentStep == nil) {
+            .progressView(isVisible: viewModel.passedSteps.last == nil) {
                 contentLoadingView
             }
             .environment(\.colorPalette, colorPalette)
@@ -40,50 +40,47 @@ public struct OnboardingView: View {
     @ViewBuilder
     private var contentView: some View {
         VStack {
-            HStack {
-                backButton.opacity(viewModel.passedSteps.isEmpty ? 0 : 1)
-                progressBarView
-                backButton.opacity(0)
-            }
-            .padding([.horizontal, .top])
-            if let currentStep = viewModel.currentStep {
-                switch currentStep.type {
-                case .oneAnswer(let oneAnswerStep):
-                    OneAnswerView(step: oneAnswerStep)
-                        .transition(transitionAnimation)
-                case .binaryAnswer(let binaryAnswerStep):
-                    BinaryAnswerView(step: binaryAnswerStep)
-                        .transition(transitionAnimation)
-                case .multipleAnswer(let multipleAnswerStep):
-                    MultipleAnswerView(step: multipleAnswerStep)
-                        .transition(transitionAnimation)
-                case .description(let descriptionStep):
-                    DescriptionStepView(step: descriptionStep)
-                        .transition(transitionAnimation)
-                case .unknown:
-                    EmptyView()
-                }
+            customToolbarView
+            NavigationStack(path: $viewModel.passedSteps) {
+                navigationStackContentView(step: viewModel.passedSteps.last)
+                    .navigationDestination(for: OnboardingStep.self, destination: navigationStackContentView(step:))
             }
         }
-        .animation(.easeInOut, value: viewModel.currentStep)
     }
 
-    private var backButton: some View {
-        Button {
-            viewModel.onBack()
-        } label: {
-            Image(systemName: "chevron.compact.left")
-                .resizable()
-                .font(.system(size: 12, weight: .light))
-                .frame(width: 12, height: 16)
-                .frame(width: 20)
-                .foregroundStyle(colorPalette.primaryTextColor)
+    private var customToolbarView: some View {
+        HStack {
+            backButton
+                .opacity(viewModel.passedSteps.count == 1 ? 0 : 1)
+                .animation(.easeInOut, value: viewModel.passedSteps.count == 1)
+            ProgressBarView(completed: viewModel.passedStepsProcent)
+            backButton.opacity(0)
         }
-        .buttonStyle(PlainButtonStyle())
+        .padding([.horizontal, .top])
     }
 
-    private var progressBarView: some View {
-        ProgressBarView(completed: viewModel.passedStepsProcent)
+    private func navigationStackContentView(step: OnboardingStep?) -> some View {
+        VStack {
+            switch step?.type {
+            case .oneAnswer(let oneAnswerStep):
+                OneAnswerView(step: oneAnswerStep)
+            case .binaryAnswer(let binaryAnswerStep):
+                BinaryAnswerView(step: binaryAnswerStep)
+            case .multipleAnswer(let multipleAnswerStep):
+                MultipleAnswerView(step: multipleAnswerStep)
+            case .description(let descriptionStep):
+                DescriptionStepView(step: descriptionStep)
+            case .unknown, .none:
+                EmptyView()
+            }
+        }
+        .toolbar(.hidden, for: .navigationBar)
+    }
+
+    var backButton: some View {
+        BackButton {
+            viewModel.passedSteps.removeLast()
+        }
     }
 
     private var contentLoadingView: some View {
@@ -91,13 +88,6 @@ public struct OnboardingView: View {
             .tint(colorPalette.primaryButtonBackgroundColor)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(colorPalette.backgroundColor)
-    }
-
-    private var transitionAnimation: AnyTransition {
-        .asymmetric(
-            insertion: .move(edge: .trailing),
-            removal: .move(edge: .leading)
-        )
     }
 }
 
