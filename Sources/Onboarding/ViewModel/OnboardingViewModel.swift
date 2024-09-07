@@ -44,6 +44,7 @@ final class OnboardingViewModel: ObservableObject {
 
     func onAnswer() {
         guard let nextStepIndex = steps.firstIndex(where: { $0.id == passedSteps.last?.nextStepID }) else { return }
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         passedSteps.append(steps[nextStepIndex])
     }
 

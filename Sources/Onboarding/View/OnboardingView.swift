@@ -26,7 +26,6 @@ public struct OnboardingView: View {
                 contentLoadingView
             }
             .environment(\.colorPalette, colorPalette)
-            .environmentObject(viewModel)
             .background(colorPalette.backgroundColor)
             .onFirstAppear {
                 do {
@@ -45,6 +44,7 @@ public struct OnboardingView: View {
                 navigationStackContentView(step: viewModel.passedSteps.last)
                     .navigationDestination(for: OnboardingStep.self, destination: navigationStackContentView(step:))
             }
+            .environmentObject(viewModel)
         }
     }
 

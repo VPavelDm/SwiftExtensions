@@ -64,7 +64,7 @@ struct MultipleAnswerView: View {
 
     private func buttonView(answer: Binding<BoxModel>) -> some View {
         Button {
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
             answer.wrappedValue.isChose.toggle()
         } label: {
             HStack {
@@ -80,7 +80,6 @@ struct MultipleAnswerView: View {
 
     private var nextButton: some View {
         Button {
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             viewModel.onAnswer()
         } label: {
             Text("Next")

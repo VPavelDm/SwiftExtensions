@@ -49,7 +49,6 @@ struct OneAnswerView: View {
 
     private func buttonView(answer: String) -> some View {
         Button {
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             viewModel.onAnswer()
         } label: {
             Text(answer)

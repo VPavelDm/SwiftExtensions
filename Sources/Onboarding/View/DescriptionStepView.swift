@@ -57,7 +57,6 @@ struct DescriptionStepView: View {
 
     private var nextButton: some View {
         Button {
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             viewModel.onAnswer()
         } label: {
             Text("Next")
