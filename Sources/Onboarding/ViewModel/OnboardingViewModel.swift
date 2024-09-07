@@ -18,6 +18,8 @@ final class OnboardingViewModel: ObservableObject {
 
     @Published var steps: [OnboardingStep] = []
     @Published var passedSteps: [OnboardingStep] = []
+    @Published var currentStep: OnboardingStep?
+    @Published var userAnswers: [UserAnswer] = []
 
     var passedStepsProcent: CGFloat {
         guard let maxStepsInChain = passedSteps.last?.maxStepsInChain else { return 1 }
@@ -42,19 +44,25 @@ final class OnboardingViewModel: ObservableObject {
             .filter(\.isNotUnknown)
         guard let firstStep = steps.first else { throw OnboardingError.noSteps }
         passedSteps.append(firstStep)
+        self.currentStep = firstStep
     }
 
-    func onAnswer() {
+    func onAnswer(answers: [String] = []) {
+        guard let currentStep else { return }
+        userAnswers.append(UserAnswer(onboardingStepID: currentStep.id, answers: answers))
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+
         if let nextStepIndex = steps.firstIndex(where: { $0.id == passedSteps.last?.nextStepID }) {
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             passedSteps.append(steps[nextStepIndex])
+            self.currentStep = passedSteps.last
         } else {
             completion()
         }
     }
 
     func onBack() {
-        guard passedSteps.count > 1 else { return }
+        userAnswers.removeLast()
         passedSteps.removeLast()
+        currentStep = passedSteps.last
     }
 }

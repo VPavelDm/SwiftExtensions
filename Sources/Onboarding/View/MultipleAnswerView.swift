@@ -80,7 +80,7 @@ struct MultipleAnswerView: View {
 
     private var nextButton: some View {
         Button {
-            viewModel.onAnswer()
+            viewModel.onAnswer(answers: answers.map(\.value))
         } label: {
             Text("Next")
         }

@@ -47,7 +47,7 @@ struct BinaryAnswerView: View {
 
     private var firstAnswerButton: some View {
         Button {
-            viewModel.onAnswer()
+            viewModel.onAnswer(answers: [step.firstAnswer.text])
         } label: {
             VStack {
                 if let icon = step.firstAnswer.icon {
@@ -62,7 +62,7 @@ struct BinaryAnswerView: View {
 
     private var secondAnswerButton: some View {
         Button {
-            viewModel.onAnswer()
+            viewModel.onAnswer(answers: [step.secondAnswer.text])
         } label: {
             VStack {
                 if let icon = step.secondAnswer.icon {
@@ -78,5 +78,5 @@ struct BinaryAnswerView: View {
 
 #Preview {
     BinaryAnswerView(step: .testData())
-        .environmentObject(OnboardingViewModel(configuration: .testData()))
+        .environmentObject(OnboardingViewModel(configuration: .testData(), completion: {}))
 }

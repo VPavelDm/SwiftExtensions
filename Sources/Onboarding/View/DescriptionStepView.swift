@@ -68,5 +68,5 @@ struct DescriptionStepView: View {
 
 #Preview {
     DescriptionStepView(step: .testData())
-        .environmentObject(OnboardingViewModel(configuration: .testData()))
+        .environmentObject(OnboardingViewModel(configuration: .testData(), completion: {}))
 }

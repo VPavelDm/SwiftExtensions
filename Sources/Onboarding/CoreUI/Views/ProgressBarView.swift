@@ -38,5 +38,5 @@ private extension CGFloat {
 }
 
 #Preview {
-    OnboardingView(configuration: .testData())
+    OnboardingView(configuration: .testData(), completion: {})
 }
