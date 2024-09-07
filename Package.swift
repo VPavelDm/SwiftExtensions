@@ -14,9 +14,6 @@ let package = Package(
             name: "CoreNetwork",
             targets: ["CoreNetwork"]),
         .library(
-            name: "Onboarding",
-            targets: ["Onboarding"]),
-        .library(
             name: "CoreUI",
             targets: ["CoreUI"])
     ],
@@ -26,15 +23,6 @@ let package = Package(
 
         .target(
             name: "CoreNetwork"),
-
-            .target(
-                name: "Onboarding",
-                dependencies: [
-                    "CoreUI"
-                ],
-                resources: [
-                    .process("Resources")
-                ]),
 
             .target(
                 name: "CoreUI"),
