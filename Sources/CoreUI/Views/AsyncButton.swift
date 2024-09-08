@@ -11,7 +11,7 @@ public struct AsyncButton<Label>: View where Label: View {
     var perform: () async -> Void
     var label: () -> Label
 
-    public init(perform: @escaping () -> Void, label: @escaping () -> Label) {
+    public init(perform: @escaping () async -> Void, label: @escaping () -> Label) {
         self.perform = perform
         self.label = label
     }
