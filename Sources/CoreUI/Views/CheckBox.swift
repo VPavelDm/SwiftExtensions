@@ -50,8 +50,16 @@ extension CheckBox {
     }
 
     public struct ColorPalette: Sendable, Equatable, Hashable {
-        let background: String = "#000000"
-        let checkmark: String = "#FFFFFF"
+        var background: String
+        var checkmark: String
+
+        public init(
+            background: String  = "#000000",
+            checkmark: String = "#FFFFFF"
+        ) {
+            self.background = background
+            self.checkmark = checkmark
+        }
     }
 }
 
