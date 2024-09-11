@@ -41,7 +41,7 @@ public struct CheckBox: View {
     }
 }
 
-// MARK: -
+// MARK: - EnvironmentKey
 
 extension CheckBox {
 
@@ -49,13 +49,14 @@ extension CheckBox {
         static let defaultValue: ColorPalette = ColorPalette()
     }
 
-    struct ColorPalette: Sendable, Equatable, Hashable {
+    public struct ColorPalette: Sendable, Equatable, Hashable {
         let background: String = "#000000"
         let checkmark: String = "#FFFFFF"
     }
 }
 
-extension EnvironmentValues {
+public extension EnvironmentValues {
+
     var checkBoxColorPalette: CheckBox.ColorPalette {
         get { self[CheckBox.ColorPaletteKey.self] }
         set { self[CheckBox.ColorPaletteKey.self] = newValue }
