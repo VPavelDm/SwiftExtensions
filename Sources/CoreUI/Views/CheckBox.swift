@@ -8,10 +8,11 @@
 import SwiftUI
 
 public struct CheckBox: View {
-    @Environment(\.checkBoxColorPalette) private var colorPalette
+    var colorPalette: any CheckBoxColorPalette
     @Binding var isChose: Bool
 
-    public init(isChose: Binding<Bool>) {
+    public init(colorPalette: any CheckBoxColorPalette, isChose: Binding<Bool>) {
+        self.colorPalette = colorPalette
         self._isChose = isChose
     }
 
@@ -41,34 +42,11 @@ public struct CheckBox: View {
     }
 }
 
-// MARK: - EnvironmentKey
+// MARK: -
 
-extension CheckBox {
-
-    struct ColorPaletteKey: EnvironmentKey {
-        static let defaultValue: ColorPalette = ColorPalette()
-    }
-
-    public struct ColorPalette: Sendable, Equatable, Hashable {
-        var background: Color
-        var checkmark: Color
-
-        public init(
-            background: Color = .black,
-            checkmark: Color = .white
-        ) {
-            self.background = background
-            self.checkmark = checkmark
-        }
-    }
-}
-
-public extension EnvironmentValues {
-
-    var checkBoxColorPalette: CheckBox.ColorPalette {
-        get { self[CheckBox.ColorPaletteKey.self] }
-        set { self[CheckBox.ColorPaletteKey.self] = newValue }
-    }
+public protocol CheckBoxColorPalette {
+    var background: Color { get }
+    var checkmark: Color { get }
 }
 
 // MARK: - Constants
@@ -78,8 +56,4 @@ extension CGFloat {
     static let size: Self = 20
     static let cornerRadius: Self = 4
     static let borderWidth: Self = 1
-}
-
-#Preview {
-    CheckBox(isChose: .constant(true))
 }

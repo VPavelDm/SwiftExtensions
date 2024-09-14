@@ -8,14 +8,14 @@
 import SwiftUI
 
 public struct AsyncButton<Label>: View where Label: View {
-    @Environment(\.asyncButtonColorPalette) private var colorPalette
-
     @State private var isLoading: Bool = false
 
+    private var colorPalette: any AsyncButtonColorPalette
     var perform: () async -> Void
     var label: () -> Label
 
-    public init(perform: @escaping () async -> Void, label: @escaping () -> Label) {
+    public init(colorPalette: any AsyncButtonColorPalette, perform: @escaping () async -> Void, label: @escaping () -> Label) {
+        self.colorPalette = colorPalette
         self.perform = perform
         self.label = label
     }
@@ -38,24 +38,8 @@ public struct AsyncButton<Label>: View where Label: View {
     }
 }
 
-// MARK: - EnvironmentKey
+// MARK: -
 
-private struct AsyncButtonColorPaletteKey: EnvironmentKey {
-    static let defaultValue: AsyncButtonColorPalette = AsyncButtonColorPalette()
-}
-
-public struct AsyncButtonColorPalette: Sendable, Equatable, Hashable {
-    var progressView: Color
-
-    public init(progressView: Color = .black) {
-        self.progressView = progressView
-    }
-}
-
-public extension EnvironmentValues {
-
-    var asyncButtonColorPalette: AsyncButtonColorPalette {
-        get { self[AsyncButtonColorPaletteKey.self] }
-        set { self[AsyncButtonColorPaletteKey.self] = newValue }
-    }
+public protocol AsyncButtonColorPalette {
+    var progressView: Color { get }
 }
