@@ -31,7 +31,7 @@ public struct AsyncButton<Label>: View where Label: View {
             ZStack {
                 label().opacity(isLoading ? 0 : 1)
                 ProgressView()
-                    .tint(colorPalette.progressView)
+                    .tint(colorPalette.asyncButtonProgressView)
                     .opacity(isLoading ? 1 : 0)
             }
         }
@@ -41,5 +41,5 @@ public struct AsyncButton<Label>: View where Label: View {
 // MARK: -
 
 public protocol AsyncButtonColorPalette {
-    var progressView: Color { get }
+    var asyncButtonProgressView: Color { get }
 }

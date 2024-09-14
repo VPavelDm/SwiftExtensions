@@ -24,17 +24,17 @@ public struct CheckBox: View {
                 if isChose {
                     RoundedRectangle(cornerRadius: .cornerRadius)
                         .frame(width: .size, height: .size)
-                        .foregroundStyle(colorPalette.background)
+                        .foregroundStyle(colorPalette.checkboxBackground)
                     Image(systemName: "checkmark")
                         .resizable()
                         .font(.system(size: .size / 2, weight: .semibold))
                         .frame(width: .size / 2, height: .size / 2)
-                        .foregroundStyle(colorPalette.checkmark)
+                        .foregroundStyle(colorPalette.checkboxCheckmark)
                 } else {
                     RoundedRectangle(cornerRadius: .cornerRadius)
                         .stroke(lineWidth: .borderWidth)
                         .frame(width: .size, height: .size)
-                        .foregroundStyle(colorPalette.background)
+                        .foregroundStyle(colorPalette.checkboxBackground)
                 }
             }
             .animation(.easeInOut, value: isChose)
@@ -45,8 +45,8 @@ public struct CheckBox: View {
 // MARK: -
 
 public protocol CheckBoxColorPalette {
-    var background: Color { get }
-    var checkmark: Color { get }
+    var checkboxBackground: Color { get }
+    var checkboxCheckmark: Color { get }
 }
 
 // MARK: - Constants
