@@ -32,7 +32,7 @@ public struct AsyncButton<Label>: View where Label: View {
                 label().opacity(isLoading ? 0 : 1)
                 ProgressView()
                     .tint(colorPalette.asyncButtonProgressView)
-                    .opacity(isLoading ? 1 : 0)
+                    .opacity(isLoading ? 0 : 1)
             }
         }
     }
