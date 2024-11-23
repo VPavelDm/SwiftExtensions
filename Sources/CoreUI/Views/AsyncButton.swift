@@ -10,12 +10,10 @@ import SwiftUI
 public struct AsyncButton<Label>: View where Label: View {
     @State private var isLoading: Bool = false
 
-    private var colorPalette: any AsyncButtonColorPalette
     var perform: () async -> Void
     var label: () -> Label
 
-    public init(colorPalette: any AsyncButtonColorPalette, perform: @escaping () async -> Void, label: @escaping () -> Label) {
-        self.colorPalette = colorPalette
+    public init(perform: @escaping () async -> Void, label: @escaping () -> Label) {
         self.perform = perform
         self.label = label
     }
@@ -31,15 +29,9 @@ public struct AsyncButton<Label>: View where Label: View {
             ZStack {
                 label().opacity(isLoading ? 0 : 1)
                 ProgressView()
-                    .tint(colorPalette.asyncButtonProgressView)
+                    .tint(.black)
                     .opacity(isLoading ? 1 : 0)
             }
         }
     }
-}
-
-// MARK: -
-
-public protocol AsyncButtonColorPalette {
-    var asyncButtonProgressView: Material { get }
 }

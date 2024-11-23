@@ -8,11 +8,9 @@
 import SwiftUI
 
 public struct CheckBox: View {
-    var colorPalette: any CheckBoxColorPalette
     @Binding var isChose: Bool
 
-    public init(colorPalette: any CheckBoxColorPalette, isChose: Binding<Bool>) {
-        self.colorPalette = colorPalette
+    public init(isChose: Binding<Bool>) {
         self._isChose = isChose
     }
 
@@ -24,29 +22,22 @@ public struct CheckBox: View {
                 if isChose {
                     RoundedRectangle(cornerRadius: .cornerRadius)
                         .frame(width: .size, height: .size)
-                        .foregroundStyle(colorPalette.checkboxBackground)
+                        .foregroundStyle(Color.accentColor)
                     Image(systemName: "checkmark")
                         .resizable()
                         .font(.system(size: .size / 2, weight: .semibold))
                         .frame(width: .size / 2, height: .size / 2)
-                        .foregroundStyle(colorPalette.checkboxCheckmark)
+                        .foregroundStyle(.black)
                 } else {
                     RoundedRectangle(cornerRadius: .cornerRadius)
                         .stroke(lineWidth: .borderWidth)
                         .frame(width: .size, height: .size)
-                        .foregroundStyle(colorPalette.checkboxBackground)
+                        .foregroundStyle(Color.accentColor)
                 }
             }
             .animation(.easeInOut, value: isChose)
         }
     }
-}
-
-// MARK: -
-
-public protocol CheckBoxColorPalette {
-    var checkboxBackground: Material { get }
-    var checkboxCheckmark: Material { get }
 }
 
 // MARK: - Constants
