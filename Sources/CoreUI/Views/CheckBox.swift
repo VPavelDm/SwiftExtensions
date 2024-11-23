@@ -45,8 +45,8 @@ public struct CheckBox: View {
 // MARK: -
 
 public protocol CheckBoxColorPalette {
-    var checkboxBackground: Color { get }
-    var checkboxCheckmark: Color { get }
+    var checkboxBackground: Material { get }
+    var checkboxCheckmark: Material { get }
 }
 
 // MARK: - Constants
