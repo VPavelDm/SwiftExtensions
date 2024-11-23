@@ -41,5 +41,5 @@ public struct AsyncButton<Label>: View where Label: View {
 // MARK: -
 
 public protocol AsyncButtonColorPalette {
-    var asyncButtonProgressView: Color { get }
+    var asyncButtonProgressView: Material { get }
 }
